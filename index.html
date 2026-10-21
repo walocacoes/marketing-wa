@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entregas | Marketing</title>
+<style>
+:root{--navy:#1f3a5f;--navy2:#2c5282;--bg:#f4f6fa;--card:#fff;--line:#dfe4ec;--txt:#1d2733;--mut:#6b7686;
+--ok:#2f855a;--okbg:#c6f6d5;--warn:#b7791f;--warnbg:#fefcbf;--bad:#c53030;--badbg:#fed7d7;--info:#2b6cb0;--infobg:#bee3f8}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:var(--txt);background:var(--bg)}
+h1{font-size:22px;margin:0;color:var(--navy)} h2{font-size:15px;margin:26px 0 10px;color:var(--navy)}
+button{font-family:inherit;font-size:13px;cursor:pointer;border-radius:6px;border:1px solid var(--line);background:#fff;padding:7px 12px;color:var(--txt)}
+button:hover{background:#eef2f8}
+button.pri{background:var(--navy);border-color:var(--navy);color:#fff} button.pri:hover{background:var(--navy2)}
+button.danger{color:var(--bad)} button.sm{padding:4px 8px;font-size:12px}
+input,select,textarea{font-family:inherit;font-size:14px;padding:8px;border:1px solid #c5cdd9;border-radius:6px;width:100%;background:#fff}
+input:disabled,select:disabled,textarea:disabled{background:#eceff4;color:#69727f}
+label{display:block;font-size:12px;color:var(--mut);margin-bottom:4px}
+.top{background:var(--navy);color:#fff;display:flex;align-items:center;gap:20px;padding:0 20px;flex-wrap:wrap}
+.brand{font-weight:bold;padding:14px 0}
+nav{display:flex;gap:2px;flex:1;flex-wrap:wrap}
+nav a{color:#cfdcf0;text-decoration:none;padding:15px 12px;font-size:13px;cursor:pointer}
+nav a.on,nav a:hover{color:#fff;background:var(--navy2)}
+.who{display:flex;gap:10px;align-items:center;font-size:12px;color:#cfdcf0}
+.who button{background:transparent;color:#fff;border-color:#6d86a8}
+main{max-width:1180px;margin:0 auto;padding:22px 18px 60px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.bar .r{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.bar .r>div{min-width:130px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card .k{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.3px}
+.card .v{font-size:24px;font-weight:bold;margin-top:6px;color:var(--navy)}
+.card.bad .v{color:var(--bad)} .card.warn .v{color:var(--warn)} .card.ok .v{color:var(--ok)}
+.tw{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:auto}
+table{border-collapse:collapse;width:100%;min-width:640px}
+th{background:#eef2f8;color:var(--navy);font-size:11px;text-transform:uppercase;letter-spacing:.3px;text-align:left;padding:10px;white-space:nowrap}
+td{padding:9px 10px;border-top:1px solid var(--line);vertical-align:middle}
+tr.tot td{background:#eef2f8;font-weight:bold}
+.c{text-align:center}
+.badge{display:inline-block;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:bold;white-space:nowrap}
+.b-ok{background:var(--okbg);color:var(--ok)} .b-warn{background:var(--warnbg);color:var(--warn)}
+.b-bad{background:var(--badbg);color:var(--bad)} .b-info{background:var(--infobg);color:var(--info)} .b-mut{background:#e2e8f0;color:#4a5568}
+.empty{padding:22px;text-align:center;color:var(--mut)}
+.note{font-size:12px;color:var(--mut);margin-top:8px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:800px){.two{grid-template-columns:1fr}}
+.list{background:#fff;border:1px solid var(--line);border-radius:10px}
+.list .it{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-top:1px solid var(--line)}
+.list .it:first-child{border-top:0}
+.list .hd{padding:10px 12px;font-weight:bold;color:var(--navy);border-bottom:1px solid var(--line)}
+dialog{border:0;border-radius:12px;padding:0;width:min(680px,94vw);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(20,30,50,.5)}
+.dh{padding:16px 20px;border-bottom:1px solid var(--line);font-weight:bold;color:var(--navy);font-size:16px}
+.db{padding:18px 20px;max-height:72vh;overflow:auto}
+.df{padding:14px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid .full{grid-column:1/-1}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+.hint{font-size:11px;color:var(--mut);margin-top:3px}
+#login,#setup,#noprofile{max-width:400px;margin:9vh auto;background:#fff;border:1px solid var(--line);border-radius:12px;padding:28px}
+#login h1,#noprofile h1,#setup h1{margin-bottom:6px} .sub{color:var(--mut);margin:0 0 18px}
+.err{color:var(--bad);font-size:13px;min-height:18px;margin:8px 0}
+.linkbtn{background:none;border:0;color:var(--info);padding:0;text-decoration:underline}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1d2733;color:#fff;padding:10px 16px;border-radius:8px;opacity:0;transition:.25s;pointer-events:none;z-index:99}
+#toast.on{opacity:1}
+.hist{font-size:12px;color:var(--mut);margin:0;padding-left:16px}
+code{background:#eef2f8;padding:2px 5px;border-radius:4px;word-break:break-all}
+a.lk{color:var(--info)}
+</style>
+</head>
+<body>
+
+<div id="setup" hidden>
+  <h1>Configuração pendente</h1>
+  <p class="sub">Cole as credenciais do seu projeto Firebase no começo do script deste arquivo (objeto <code>firebaseConfig</code>). Os passos estão no LEIA-ME.</p>
+</div>
+
+<div id="login" hidden>
+  <h1>Entregas | Marketing</h1>
+  <p class="sub">Acesse com seu e-mail e senha.</p>
+  <form id="fLogin">
+    <div style="margin-bottom:12px"><label>E-mail</label><input id="lEmail" type="email" required autocomplete="username"></div>
+    <div><label>Senha</label><input id="lSenha" type="password" required autocomplete="current-password"></div>
+    <div class="err" id="lErr"></div>
+    <button class="pri" style="width:100%" type="submit">Entrar</button>
+    <p class="note" style="text-align:center"><button type="button" class="linkbtn" id="lReset">Esqueci minha senha</button></p>
+  </form>
+</div>
+
+<div id="noprofile" hidden>
+  <h1>Conta sem perfil</h1>
+  <p class="sub">Seu login existe, mas ainda não foi liberado. Envie este código para a WA:</p>
+  <p><code id="npUid"></code></p>
+  <button id="npOut">Sair</button>
+</div>
+
+<div id="app" hidden>
+  <header class="top">
+    <div class="brand">Entregas | Marketing</div>
+    <nav id="nav"></nav>
+    <div class="who"><span id="whoami"></span><button id="btnOut">Sair</button></div>
+  </header>
+  <main id="view"></main>
+</div>
+
+<dialog id="dlg"></dialog>
+<div id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, sendPasswordResetEmail }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, doc, onSnapshot, setDoc, addDoc, updateDoc, deleteDoc, getDoc, getDocs, query, where, serverTimestamp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* ============ 1. COLE AQUI AS CREDENCIAIS DO SEU PROJETO FIREBASE ============ */
+const firebaseConfig = {
+  apiKey: "AIzaSyBt71g3tYU6qg7Ki3j2qS0nv8AiNQ8tA_c",
+  authDomain: "marketing-wa.firebaseapp.com",
+  projectId: "marketing-wa",
+  storageBucket: "marketing-wa.firebasestorage.app",
+  messagingSenderId: "845456300707",
+  appId: "1:845456300707:web:197743a0df1fafbba63d16"
+};
+/* =============================================================================== */
+
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const pad = n => String(n).padStart(2, "0");
+const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+const fmtDate = s => s ? s.split("-").reverse().join("/") : "";
+const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+const monthLabel = m => { const [y, mo] = m.split("-"); return MESES[+mo - 1] + "/" + y; };
+const daysBetween = (a, b) => Math.round((new Date(b + "T00:00:00") - new Date(a + "T00:00:00")) / 86400000);
+const pct = v => v == null ? "-" : (v * 100).toFixed(1).replace(".", ",") + "%";
+const brl = v => v == null || v === "" ? "-" : Number(v).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+const num = v => v == null || v === "" ? "-" : Number(v).toLocaleString("pt-BR");
+const toNum = x => (x === "" || x == null) ? null : Number(x);
+const safeUrl = u => /^https?:\/\//i.test(u || "") ? u : null;
+
+if (!firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith("COLE")) {
+  $("#setup").hidden = false;
+  throw new Error("Firebase não configurado");
+}
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const state = {
+  user: null, profile: null, contrato: [], entregas: [], resultados: {}, usuarios: [],
+  mes: todayStr().slice(0, 7), view: "painel", unsubs: [],
+  filtros: { mes: todayStr().slice(0, 7), tipo: "", status: "", aprov: "" }
+};
+const isAdmin = () => state.profile?.role === "admin";
+const tipoNome = id => state.contrato.find(t => t.id === id)?.nome || "(tipo removido)";
+
+/* ---------- regras de negócio ---------- */
+function statusOf(e) {
+  if (!e.dataReal) return todayStr() > e.dataPlanejada ? "Atrasado" : "Planejado";
+  return e.dataReal <= e.dataPlanejada ? "Entregue no prazo" : "Entregue com atraso";
+}
+function atrasoOf(e) {
+  const ref = e.dataReal || todayStr();
+  return Math.max(0, daysBetween(e.dataPlanejada, ref));
+}
+const STATUS_CLS = { "Atrasado": "b-bad", "Planejado": "b-info", "Entregue no prazo": "b-ok", "Entregue com atraso": "b-warn" };
+const SIT_CLS = { "Atrasos em aberto": "b-bad", "Calendário abaixo da meta": "b-warn", "Meta cumprida": "b-ok", "Defina a meta": "b-mut", "Em andamento": "b-info" };
+const APROV_CLS = { "Aprovado": "b-ok", "Pendente": "b-mut", "Ajustes pedidos": "b-warn" };
+const badge = (t, map) => `<span class="badge ${map[t] || "b-mut"}">${esc(t)}</span>`;
+
+function resumo(m) {
+  const list = state.entregas.filter(e => (e.dataPlanejada || "").startsWith(m));
+  const entregues = list.filter(e => e.dataReal);
+  const noPrazo = entregues.filter(e => e.dataReal <= e.dataPlanejada);
+  const atrasoTotal = entregues.reduce((s, e) => s + atrasoOf(e), 0);
+  const abertas = list.filter(e => statusOf(e) === "Atrasado");
+  const semAprov = entregues.filter(e => e.aprovacao !== "Aprovado");
+  const porTipo = state.contrato.map(t => {
+    const l = list.filter(e => e.tipoId === t.id);
+    const en = l.filter(e => e.dataReal);
+    const meta = toNum(t.meta);
+    const r = {
+      nome: t.nome, meta, plan: l.length, ent: en.length,
+      prazo: en.filter(e => e.dataReal <= e.dataPlanejada).length,
+      atr: en.filter(e => e.dataReal > e.dataPlanejada).length,
+      abertas: l.filter(e => statusOf(e) === "Atrasado").length
+    };
+    r.falta = meta == null ? null : Math.max(0, meta - r.ent);
+    r.pct = meta ? r.ent / meta : null;
+    r.sit = r.abertas > 0 ? "Atrasos em aberto" : meta == null ? "Defina a meta" :
+      r.plan < meta ? "Calendário abaixo da meta" : r.ent >= meta ? "Meta cumprida" : "Em andamento";
+    return r;
+  });
+  const temMeta = porTipo.some(r => r.meta != null);
+  const metaTotal = temMeta ? porTipo.reduce((s, r) => s + (r.meta || 0), 0) : null;
+  const faltaTotal = temMeta ? porTipo.reduce((s, r) => s + (r.falta || 0), 0) : null;
+  return {
+    plan: list.length, ent: entregues.length, prazo: noPrazo.length,
+    pont: entregues.length ? noPrazo.length / entregues.length : null,
+    atrasoMedio: entregues.length ? atrasoTotal / entregues.length : null,
+    abertas: abertas.length, semAprov: semAprov.length, porTipo, metaTotal, faltaTotal,
+    pctContrato: metaTotal ? (metaTotal - faltaTotal) / metaTotal : null
+  };
+}
+function calcRes(r) {
+  if (!r) return {};
+  const o = {};
+  if (r.seguidoresInicio != null && r.seguidoresFim != null) {
+    o.cresc = r.seguidoresFim - r.seguidoresInicio;
+    if (r.seguidoresInicio) o.crescPct = o.cresc / r.seguidoresInicio;
+  }
+  if (r.impressoes && r.cliques != null) o.ctr = r.cliques / r.impressoes;
+  if (r.investimento != null && r.cliques) o.cpc = r.investimento / r.cliques;
+  if (r.investimento != null && r.conversas) o.custoConv = r.investimento / r.conversas;
+  if (r.investimento != null && r.locacoes) o.custoLoc = r.investimento / r.locacoes;
+  return o;
+}
+function monthOptions(sel, withAll = false) {
+  const set = new Set();
+  for (let y = 2026; y <= 2027; y++) for (let m = 1; m <= 12; m++) set.add(`${y}-${pad(m)}`);
+  state.entregas.forEach(e => e.dataPlanejada && set.add(e.dataPlanejada.slice(0, 7)));
+  const arr = [...set].sort();
+  return (withAll ? `<option value="">Todos</option>` : "") +
+    arr.map(m => `<option value="${m}" ${m === sel ? "selected" : ""}>${monthLabel(m)}</option>`).join("");
+}
+
+/* ---------- utilidades de interface ---------- */
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("on"); setTimeout(() => t.classList.remove("on"), 2600); }
+function openDlg(title, body, footer, onSubmit) {
+  const d = $("#dlg");
+  d.innerHTML = `<form id="frm" method="dialog"><div class="dh">${esc(title)}</div><div class="db">${body}</div><div class="df">${footer}</div></form>`;
+  d.onsubmit = async ev => { ev.preventDefault(); if (onSubmit) { try { await onSubmit(new FormData($("#frm"))); } catch (err) { console.error(err); toast("Erro: " + (err.code || err.message)); } } };
+  d.showModal();
+}
+const closeDlg = () => $("#dlg").close();
+const field = (label, name, type, value, o = {}) => `
+  <div class="${o.full ? "full" : ""}"><label>${esc(label)}</label>
+  ${type === "textarea" ? `<textarea name="${name}" rows="2" ${o.disabled ? "disabled" : ""}>${esc(value)}</textarea>` :
+    type === "select" ? `<select name="${name}" ${o.disabled ? "disabled" : ""} ${o.required ? "required" : ""}>${o.options}</select>` :
+    `<input name="${name}" type="${type}" value="${esc(value)}" ${o.disabled ? "disabled" : ""} ${o.required ? "required" : ""} ${o.attrs || ""}>`}
+  ${o.hint ? `<div class="hint">${esc(o.hint)}</div>` : ""}</div>`;
+
+/* ---------- autenticação ---------- */
+const AUTH_ERR = {
+  "auth/invalid-credential": "E-mail ou senha incorretos.", "auth/wrong-password": "E-mail ou senha incorretos.",
+  "auth/user-not-found": "E-mail ou senha incorretos.", "auth/too-many-requests": "Muitas tentativas. Aguarde alguns minutos.",
+  "auth/invalid-email": "E-mail inválido.", "auth/network-request-failed": "Sem conexão com a internet."
+};
+$("#fLogin").addEventListener("submit", async e => {
+  e.preventDefault(); $("#lErr").textContent = "";
+  try { await signInWithEmailAndPassword(auth, $("#lEmail").value.trim(), $("#lSenha").value); }
+  catch (err) { $("#lErr").textContent = AUTH_ERR[err.code] || "Não foi possível entrar."; }
+});
+$("#lReset").addEventListener("click", async () => {
+  const em = $("#lEmail").value.trim();
+  if (!em) { $("#lErr").textContent = "Digite seu e-mail acima e clique novamente."; return; }
+  try { await sendPasswordResetEmail(auth, em); $("#lErr").textContent = ""; toast("Enviamos o link de redefinição para o seu e-mail."); }
+  catch (err) { $("#lErr").textContent = AUTH_ERR[err.code] || "Não foi possível enviar o e-mail."; }
+});
+$("#btnOut").addEventListener("click", () => signOut(auth));
+$("#npOut").addEventListener("click", () => signOut(auth));
+
+function stopListeners() { state.unsubs.forEach(u => u()); state.unsubs = []; }
+function show(id) { for (const x of ["login", "noprofile", "app"]) $("#" + x).hidden = x !== id; }
+
+onAuthStateChanged(auth, async u => {
+  stopListeners();
+  if (!u) { state.user = null; state.profile = null; show("login"); return; }
+  let snap;
+  try { snap = await getDoc(doc(db, "users", u.uid)); } catch (e) { snap = null; }
+  if (!snap || !snap.exists()) { $("#npUid").textContent = u.uid; show("noprofile"); return; }
+  state.user = u; state.profile = snap.data();
+  $("#whoami").textContent = `${state.profile.nome || u.email} (${isAdmin() ? "WA" : "Agência"})`;
+  const sub = (name, key, cb) => state.unsubs.push(onSnapshot(collection(db, name), s => { cb(s); render(); }, err => console.error(name, err)));
+  sub("contrato", "contrato", s => state.contrato = s.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (a.ordem || 0) - (b.ordem || 0)));
+  sub("entregas", "entregas", s => state.entregas = s.docs.map(d => ({ id: d.id, ...d.data() })));
+  sub("resultados", "resultados", s => { state.resultados = {}; s.docs.forEach(d => state.resultados[d.id] = d.data()); });
+  if (isAdmin()) sub("users", "users", s => state.usuarios = s.docs.map(d => ({ id: d.id, ...d.data() })));
+  state.view = (location.hash || "#painel").slice(1);
+  show("app"); render();
+});
+
+/* ---------- navegação ---------- */
+const NAV = () => [["painel", "Painel"], ["entregas", "Entregas"], ["resultados", "Resultados"], ["contrato", "Contrato"], ...(isAdmin() ? [["usuarios", "Usuários"]] : [])];
+window.addEventListener("hashchange", () => { state.view = (location.hash || "#painel").slice(1); render(); });
+
+function render() {
+  if (!state.profile) return;
+  if (!NAV().some(n => n[0] === state.view)) state.view = "painel";
+  $("#nav").innerHTML = NAV().map(([k, t]) => `<a data-nav="${k}" class="${state.view === k ? "on" : ""}">${t}</a>`).join("");
+  const views = { painel: viewPainel, entregas: viewEntregas, resultados: viewResultados, contrato: viewContrato, usuarios: viewUsuarios };
+  $("#view").innerHTML = views[state.view]();
+}
+$("#nav").addEventListener("click", e => { const a = e.target.closest("[data-nav]"); if (a) location.hash = a.dataset.nav; });
+
+/* ---------- PAINEL ---------- */
+function viewPainel() {
+  const m = state.mes, R = resumo(m), res = state.resultados[m], c = calcRes(res);
+  const card = (k, v, cls = "") => `<div class="card ${cls}"><div class="k">${k}</div><div class="v">${v}</div></div>`;
+  const emAtraso = state.entregas.filter(e => statusOf(e) === "Atrasado").sort((a, b) => a.dataPlanejada.localeCompare(b.dataPlanejada));
+  const aguardando = state.entregas.filter(e => e.dataReal && e.aprovacao !== "Aprovado").sort((a, b) => a.dataReal.localeCompare(b.dataReal));
+  const itens = (arr, tipo) => arr.length ? arr.slice(0, 8).map(e => `
+    <div class="it"><div><b>${esc(tipoNome(e.tipoId))}</b> ${esc(e.tema || "")}<div class="hint">${tipo === "atraso" ? `Previsto em ${fmtDate(e.dataPlanejada)} (${atrasoOf(e)} dia(s) de atraso)` : `Entregue em ${fmtDate(e.dataReal)} (${esc(e.aprovacao || "Pendente")})`}</div></div>
+    <button class="sm" data-act="edit" data-id="${e.id}">${isAdmin() && tipo !== "atraso" ? "Revisar" : "Abrir"}</button></div>`).join("") +
+    (arr.length > 8 ? `<div class="it hint">e mais ${arr.length - 8}. Veja na aba Entregas.</div>` : "") : `<div class="it hint">Nada por aqui.</div>`;
+  const meses = [...new Set(state.entregas.map(e => (e.dataPlanejada || "").slice(0, 7)).filter(Boolean))].sort().reverse();
+  return `
+  <div class="bar"><h1>Painel</h1><div class="r"><div><label>Mês</label><select id="selMes">${monthOptions(m)}</select></div></div></div>
+  <section class="cards">
+    ${card("Planejadas", R.plan)}${card("Entregues", R.ent)}${card("No prazo", R.prazo)}
+    ${card("Pontualidade", pct(R.pont), R.pont == null ? "" : R.pont >= .9 ? "ok" : R.pont >= .7 ? "warn" : "bad")}
+    ${card("Atraso médio (dias)", R.atrasoMedio == null ? "-" : R.atrasoMedio.toFixed(1).replace(".", ","))}
+    ${card("Atrasadas em aberto", R.abertas, R.abertas ? "bad" : "")}
+    ${card("Entregues sem aprovação", R.semAprov, R.semAprov ? "warn" : "")}
+    ${card("Contrato cumprido", pct(R.pctContrato))}
+  </section>
+
+  <h2>Pendências</h2>
+  <div class="two">
+    <div class="list"><div class="hd">Em atraso agora (todos os meses)</div>${itens(emAtraso, "atraso")}</div>
+    <div class="list"><div class="hd">Entregues aguardando aprovação da WA</div>${itens(aguardando, "aprov")}</div>
+  </div>
+
+  <h2>Entregas por tipo vs contrato (${monthLabel(m)})</h2>
+  <div class="tw"><table><thead><tr><th>Tipo de entrega</th><th class="c">Meta mensal</th><th class="c">Planejadas</th><th class="c">Entregues</th><th class="c">No prazo</th><th class="c">Com atraso</th><th class="c">Atrasadas em aberto</th><th class="c">Falta p/ meta</th><th class="c">% da meta</th><th>Situação</th></tr></thead><tbody>
+  ${R.porTipo.length ? R.porTipo.map(r => `<tr><td>${esc(r.nome)}</td><td class="c">${r.meta == null ? "a definir" : r.meta}</td><td class="c">${r.plan}</td><td class="c">${r.ent}</td><td class="c">${r.prazo}</td><td class="c">${r.atr}</td><td class="c">${r.abertas}</td><td class="c">${r.falta ?? "-"}</td><td class="c">${pct(r.pct)}</td><td>${badge(r.sit, SIT_CLS)}</td></tr>`).join("") +
+    `<tr class="tot"><td>Total</td><td class="c">${R.metaTotal ?? "a definir"}</td><td class="c">${R.plan}</td><td class="c">${R.ent}</td><td class="c">${R.prazo}</td><td class="c">${R.ent - R.prazo}</td><td class="c">${R.abertas}</td><td class="c">${R.faltaTotal ?? "-"}</td><td class="c">${pct(R.pctContrato)}</td><td></td></tr>`
+    : `<tr><td colspan="10" class="empty">Nenhum tipo de entrega cadastrado. ${isAdmin() ? "Cadastre na aba Contrato." : "A WA ainda vai cadastrar o contrato."}</td></tr>`}
+  </tbody></table></div>
+  <div class="note">"Calendário abaixo da meta" significa que foram agendadas menos entregas do que o contrato prevê para o mês.</div>
+
+  <h2>Resultados do mês (${monthLabel(m)})</h2>
+  <section class="cards">
+    ${card("Seguidores no fim", num(res?.seguidoresFim))}${card("Crescimento", c.cresc == null ? "-" : num(c.cresc) + (c.crescPct != null ? ` (${pct(c.crescPct)})` : ""))}
+    ${card("Investimento em anúncios", brl(res?.investimento))}${card("Conversas iniciadas", num(res?.conversas))}
+    ${card("Custo por conversa", brl(c.custoConv))}${card("Locações fechadas (Instagram)", num(res?.locacoes))}
+    ${card("Custo por locação fechada", brl(c.custoLoc))}
+  </section>
+  ${res ? "" : `<div class="note">A agência ainda não lançou os resultados deste mês.</div>`}
+
+  <h2>Histórico por mês</h2>
+  <div class="tw"><table><thead><tr><th>Mês</th><th class="c">Planejadas</th><th class="c">Entregues</th><th class="c">Pontualidade</th><th class="c">Atrasadas em aberto</th><th class="c">Contrato cumprido</th></tr></thead><tbody>
+  ${meses.length ? meses.map(mm => { const x = resumo(mm); return `<tr><td>${monthLabel(mm)}</td><td class="c">${x.plan}</td><td class="c">${x.ent}</td><td class="c">${pct(x.pont)}</td><td class="c">${x.abertas}</td><td class="c">${pct(x.pctContrato)}</td></tr>`; }).join("") : `<tr><td colspan="6" class="empty">Sem dados ainda.</td></tr>`}
+  </tbody></table></div>`;
+}
+
+/* ---------- ENTREGAS ---------- */
+function viewEntregas() {
+  const f = state.filtros;
+  let list = state.entregas.filter(e => (!f.mes || (e.dataPlanejada || "").startsWith(f.mes)) && (!f.tipo || e.tipoId === f.tipo) &&
+    (!f.status || statusOf(e) === f.status) && (!f.aprov || (e.aprovacao || "Pendente") === f.aprov));
+  list.sort((a, b) => a.dataPlanejada.localeCompare(b.dataPlanejada));
+  const opt = (arr, sel) => arr.map(([v, t]) => `<option value="${esc(v)}" ${v === sel ? "selected" : ""}>${esc(t)}</option>`).join("");
+  return `
+  <div class="bar"><h1>Entregas</h1><div class="r">
+    <div><label>Mês</label><select data-filtro="mes">${monthOptions(f.mes, true)}</select></div>
+    <div><label>Tipo</label><select data-filtro="tipo"><option value="">Todos</option>${opt(state.contrato.map(t => [t.id, t.nome]), f.tipo)}</select></div>
+    <div><label>Status</label><select data-filtro="status"><option value="">Todos</option>${opt(["Planejado", "Atrasado", "Entregue no prazo", "Entregue com atraso"].map(x => [x, x]), f.status)}</select></div>
+    <div><label>Aprovação</label><select data-filtro="aprov"><option value="">Todas</option>${opt(["Pendente", "Aprovado", "Ajustes pedidos"].map(x => [x, x]), f.aprov)}</select></div>
+    <button class="pri" data-act="nova">+ Nova entrega</button>
+  </div></div>
+  <div class="tw"><table><thead><tr><th>Planejada</th><th>Tipo</th><th>Tema</th><th>Responsável</th><th>Entregue em</th><th>Status</th><th class="c">Dias de atraso</th><th>Aprovação</th><th>Link</th><th></th></tr></thead><tbody>
+  ${list.length ? list.map(e => { const s = statusOf(e), lk = safeUrl(e.link); return `<tr>
+    <td>${fmtDate(e.dataPlanejada)}</td><td>${esc(tipoNome(e.tipoId))}</td><td>${esc(e.tema)}</td><td>${esc(e.responsavel)}</td>
+    <td>${fmtDate(e.dataReal)}</td><td>${badge(s, STATUS_CLS)}</td><td class="c">${s === "Planejado" ? "" : atrasoOf(e)}</td>
+    <td>${e.dataReal ? badge(e.aprovacao || "Pendente", APROV_CLS) : ""}</td>
+    <td>${lk ? `<a class="lk" href="${esc(lk)}" target="_blank" rel="noopener">abrir</a>` : ""}</td>
+    <td style="white-space:nowrap"><button class="sm" data-act="edit" data-id="${e.id}">Editar</button>
+    ${isAdmin() && e.dataReal && e.aprovacao !== "Aprovado" ? `<button class="sm" data-act="aprovar" data-id="${e.id}">Aprovar</button>` : ""}</td></tr>`; }).join("")
+    : `<tr><td colspan="10" class="empty">Nenhuma entrega com esses filtros.</td></tr>`}
+  </tbody></table></div>
+  <div class="note">${isAdmin() ? "Só a WA altera a data planejada e a aprovação." : "A data planejada e o tipo não podem ser alterados depois de lançados. Se precisar replanejar, fale com a WA."}</div>`;
+}
+
+const TRACK = { dataPlanejada: "Data planejada", dataReal: "Data real", link: "Link", aprovacao: "Aprovação", tipoId: "Tipo" };
+async function audit(entregaId, mud) {
+  if (!mud.length) return;
+  await addDoc(collection(db, "auditoria"), { entregaId, uid: state.user.uid, nome: state.profile.nome || state.user.email, emMs: Date.now(), mudancas: mud });
+}
+function diffTrack(oldE, novo) {
+  const out = [];
+  for (const k of Object.keys(TRACK)) if (k in novo && String(oldE?.[k] ?? "") !== String(novo[k] ?? "")) {
+    const val = v => k === "tipoId" ? tipoNome(v) : (v ?? "");
+    out.push({ campo: TRACK[k], de: String(val(oldE?.[k])), para: String(val(novo[k])) });
+  }
+  return out;
+}
+
+function openEntrega(id, prefillHoje = false) {
+  const e = id ? state.entregas.find(x => x.id === id) : null;
+  const adm = isAdmin(), novo = !e;
+  const lockPlan = !adm && !novo;
+  const tipos = state.contrato.map(t => `<option value="${t.id}" ${e?.tipoId === t.id ? "selected" : ""}>${esc(t.nome)}</option>`).join("");
+  const body = `<div class="grid">
+    ${field("Data planejada", "dataPlanejada", "date", e?.dataPlanejada || "", { required: true, disabled: lockPlan, hint: lockPlan ? "Definida na criação. Só a WA altera." : "" })}
+    ${field("Tipo de entrega", "tipoId", "select", "", { required: true, disabled: lockPlan, options: `<option value="">Selecione</option>${tipos}` })}
+    ${field("Tema / descrição", "tema", "text", e?.tema || "", { full: true })}
+    ${field("Responsável (agência)", "responsavel", "text", e?.responsavel || "")}
+    ${field("Data real de entrega", "dataReal", "date", e?.dataReal || (prefillHoje ? todayStr() : ""), { hint: "Preencha quando entregar ou publicar." })}
+    ${field("Link / comprovação", "link", "url", e?.link || "", { full: true, attrs: 'placeholder="https://"' })}
+    ${field("Aprovação da WA", "aprovacao", "select", "", { disabled: !adm, options: ["Pendente", "Aprovado", "Ajustes pedidos"].map(x => `<option ${((e?.aprovacao || "Pendente") === x) ? "selected" : ""}>${x}</option>`).join("") })}
+    ${field("Observação da WA", "obsWA", "text", e?.obsWA || "", { disabled: !adm })}
+    ${field("Alcance", "alcance", "number", e?.alcance ?? "", { attrs: 'min="0"' })}
+    ${field("Curtidas", "curtidas", "number", e?.curtidas ?? "", { attrs: 'min="0"' })}
+    ${field("Comentários", "comentarios", "number", e?.comentarios ?? "", { attrs: 'min="0"' })}
+    ${field("Salvamentos", "salvamentos", "number", e?.salvamentos ?? "", { attrs: 'min="0"' })}
+    ${field("Compartilhamentos", "compartilhamentos", "number", e?.compartilhamentos ?? "", { attrs: 'min="0"' })}
+    ${adm && !novo ? `<div class="full"><label>Histórico de alterações</label><ul class="hist" id="histList"><li>Carregando...</li></ul></div>` : ""}
+  </div>`;
+  const foot = `${adm && e ? `<button type="button" class="danger" data-act="delEntrega" data-id="${e.id}" style="margin-right:auto">Excluir</button>` : ""}
+    <button type="button" data-act="close">Cancelar</button><button class="pri" type="submit">Salvar</button>`;
+  openDlg(novo ? "Nova entrega" : "Editar entrega", body, foot, async fd => {
+    const v = Object.fromEntries(fd);
+    if (v.link && !safeUrl(v.link)) { toast("O link precisa começar com http:// ou https://"); return; }
+    const comum = {
+      tema: (v.tema || "").trim(), responsavel: (v.responsavel || "").trim(), dataReal: v.dataReal || "", link: (v.link || "").trim(),
+      alcance: toNum(v.alcance), curtidas: toNum(v.curtidas), comentarios: toNum(v.comentarios),
+      salvamentos: toNum(v.salvamentos), compartilhamentos: toNum(v.compartilhamentos)
+    };
+    const meta = { atualizadoEm: serverTimestamp(), atualizadoPor: state.user.uid };
+    if (novo) {
+      const data = { ...comum, ...meta, dataPlanejada: v.dataPlanejada, tipoId: v.tipoId, aprovacao: adm ? (v.aprovacao || "Pendente") : "Pendente", criadoPor: state.user.uid, criadoEm: serverTimestamp() };
+      if (adm && v.obsWA) data.obsWA = v.obsWA;
+      const ref = await addDoc(collection(db, "entregas"), data);
+      await audit(ref.id, [{ campo: "Criada", de: "", para: `${fmtDate(v.dataPlanejada)} | ${tipoNome(v.tipoId)}` }]);
+    } else {
+      const data = { ...comum, ...meta };
+      if (adm) { Object.assign(data, { dataPlanejada: v.dataPlanejada, tipoId: v.tipoId, aprovacao: v.aprovacao, obsWA: v.obsWA || "" }); }
+      await updateDoc(doc(db, "entregas", e.id), data);
+      await audit(e.id, diffTrack(e, data));
+    }
+    closeDlg(); toast("Entrega salva.");
+  });
+  if (adm && e) loadHist(e.id);
+}
+async function loadHist(id) {
+  const el = $("#histList"); if (!el) return;
+  try {
+    const s = await getDocs(query(collection(db, "auditoria"), where("entregaId", "==", id)));
+    const arr = s.docs.map(d => d.data()).sort((a, b) => b.emMs - a.emMs);
+    el.innerHTML = arr.length ? arr.map(a => `<li>${new Date(a.emMs).toLocaleString("pt-BR")} | ${esc(a.nome)}: ${a.mudancas.map(m => m.de === "" ? `${esc(m.campo)} ${esc(m.para)}` : `${esc(m.campo)} de "${esc(m.de)}" para "${esc(m.para)}"`).join("; ")}</li>`).join("") : "<li>Sem alterações registradas.</li>";
+  } catch (err) { el.innerHTML = "<li>Não foi possível carregar o histórico.</li>"; }
+}
+
+/* ---------- RESULTADOS ---------- */
+const CAMPOS_RES = [
+  ["seguidoresInicio", "Seguidores no início"], ["seguidoresFim", "Seguidores no fim"], ["alcance", "Alcance total (orgânico)"],
+  ["visitas", "Visitas ao perfil"], ["cliquesLink", "Cliques no link"], ["investimento", "Investimento em anúncios (R$)"],
+  ["impressoes", "Impressões dos anúncios"], ["cliques", "Cliques nos anúncios"], ["conversas", "Conversas iniciadas"],
+  ["locacoes", "Locações fechadas (origem Instagram)"]
+];
+function prevMonth(m) { const [y, mo] = m.split("-").map(Number); return mo === 1 ? `${y - 1}-12` : `${y}-${pad(mo - 1)}`; }
+function viewResultados() {
+  const m = state.mes, r = state.resultados[m] || {};
+  const ant = state.resultados[prevMonth(m)];
+  const c = calcRes(r);
+  const inputs = CAMPOS_RES.map(([k, t]) => {
+    const dis = k === "locacoes" && !isAdmin();
+    let val = r[k] ?? "";
+    if (k === "seguidoresInicio" && val === "" && ant?.seguidoresFim != null) val = ant.seguidoresFim;
+    return field(t, k, "number", val, { disabled: dis, attrs: `min="0" step="${k === "investimento" ? "0.01" : "1"}"`, hint: dis ? "Preenchido pela WA." : "" });
+  }).join("");
+  const kv = (k, v) => `<div class="card"><div class="k">${k}</div><div class="v" style="font-size:18px">${v}</div></div>`;
+  return `
+  <div class="bar"><h1>Resultados mensais</h1><div class="r"><div><label>Mês</label><select id="selMes">${monthOptions(m)}</select></div></div></div>
+  <div class="card"><form id="frmRes"><div class="grid">${inputs}</div>
+    <div style="margin-top:14px;text-align:right"><button class="pri" type="submit">Salvar resultados de ${monthLabel(m)}</button></div></form>
+    <div class="note">A agência preenche até o dia 5 do mês seguinte. Os campos calculados abaixo atualizam depois de salvar.</div></div>
+  <h2>Calculado automaticamente</h2>
+  <section class="cards">${kv("Crescimento (seguidores)", c.cresc == null ? "-" : num(c.cresc))}${kv("Crescimento (%)", pct(c.crescPct))}${kv("CTR", pct(c.ctr))}
+    ${kv("CPC", brl(c.cpc))}${kv("Custo por conversa", brl(c.custoConv))}${kv("Custo por locação fechada", brl(c.custoLoc))}</section>`;
+}
+document.addEventListener("submit", async e => {
+  if (e.target.id !== "frmRes") return;
+  e.preventDefault();
+  const fd = Object.fromEntries(new FormData(e.target));
+  const data = { atualizadoEm: serverTimestamp(), atualizadoPor: state.user.uid };
+  for (const [k] of CAMPOS_RES) if (k in fd) data[k] = toNum(fd[k]);
+  try { await setDoc(doc(db, "resultados", state.mes), data, { merge: true }); toast("Resultados salvos."); }
+  catch (err) { console.error(err); toast("Erro ao salvar: " + (err.code || err.message)); }
+});
+
+/* ---------- CONTRATO ---------- */
+function viewContrato() {
+  const adm = isAdmin();
+  return `
+  <div class="bar"><h1>Contrato</h1>${adm ? `<button class="pri" data-act="novoTipo">+ Novo tipo de entrega</button>` : ""}</div>
+  <div class="tw"><table><thead><tr><th>Entrega</th><th class="c">Meta mensal</th><th>Observação</th><th></th></tr></thead><tbody>
+  ${state.contrato.length ? state.contrato.map(t => `<tr><td>${esc(t.nome)}</td><td class="c">${t.meta == null || t.meta === "" ? "a definir" : t.meta}</td><td>${esc(t.obs)}</td>
+    <td>${adm ? `<button class="sm" data-act="editTipo" data-id="${t.id}">Editar</button>` : ""}</td></tr>`).join("") :
+    `<tr><td colspan="4" class="empty">Nenhum tipo cadastrado.${adm ? " Comece com Reels, Carrossel, Stories, Gestão de tráfego, Relatório mensal..." : ""}</td></tr>`}
+  </tbody></table></div>
+  <div class="note">${adm ? "Deixe a meta vazia enquanto não tiver o contrato em mãos: o painel segue acompanhando prazos e mostra 'a definir'." : "Estas são as entregas e metas combinadas em contrato."}</div>`;
+}
+function openTipo(id) {
+  const t = id ? state.contrato.find(x => x.id === id) : null;
+  const body = `<div class="grid">${field("Nome da entrega", "nome", "text", t?.nome || "", { required: true, full: true })}
+    ${field("Meta mensal (quantidade)", "meta", "number", t?.meta ?? "", { attrs: 'min="0" step="1"', hint: "Vazio = a definir" })}
+    ${field("Observação (prazo, regra, cláusula)", "obs", "text", t?.obs || "")}</div>`;
+  const foot = `${t ? `<button type="button" class="danger" data-act="delTipo" data-id="${t.id}" style="margin-right:auto">Excluir</button>` : ""}
+    <button type="button" data-act="close">Cancelar</button><button class="pri" type="submit">Salvar</button>`;
+  openDlg(t ? "Editar tipo de entrega" : "Novo tipo de entrega", body, foot, async fd => {
+    const data = { nome: fd.get("nome").trim(), meta: toNum(fd.get("meta")), obs: (fd.get("obs") || "").trim() };
+    if (t) await updateDoc(doc(db, "contrato", t.id), data);
+    else await addDoc(collection(db, "contrato"), { ...data, ordem: Math.max(0, ...state.contrato.map(x => x.ordem || 0)) + 1 });
+    closeDlg(); toast("Contrato atualizado.");
+  });
+}
+
+/* ---------- USUÁRIOS ---------- */
+function viewUsuarios() {
+  return `
+  <div class="bar"><h1>Usuários</h1><button class="pri" data-act="novoUser">+ Novo usuário</button></div>
+  <div class="tw"><table><thead><tr><th>Nome</th><th>E-mail</th><th>Perfil</th><th></th></tr></thead><tbody>
+  ${state.usuarios.map(u => `<tr><td>${esc(u.nome)}</td><td>${esc(u.email)}</td><td>${u.role === "admin" ? badge("WA (administrador)", { "WA (administrador)": "b-info" }) : badge("Agência", { "Agência": "b-mut" })}</td>
+    <td style="white-space:nowrap"><button class="sm" data-act="resetUser" data-email="${esc(u.email)}">Enviar redefinição de senha</button>
+    ${u.id !== state.user.uid ? `<button class="sm danger" data-act="delUser" data-id="${u.id}">Remover acesso</button>` : ""}</td></tr>`).join("")}
+  </tbody></table></div>
+  <div class="note">Perfil "Agência": lança e atualiza entregas e resultados, mas não altera datas planejadas, aprovação, contrato nem locações fechadas. Perfil "WA": acesso total.</div>`;
+}
+function openUser() {
+  const body = `<div class="grid">${field("Nome", "nome", "text", "", { required: true })}
+    ${field("Perfil", "role", "select", "", { options: `<option value="agencia">Agência</option><option value="admin">WA (administrador)</option>` })}
+    ${field("E-mail", "email", "email", "", { required: true })}
+    ${field("Senha provisória", "senha", "text", "", { required: true, attrs: 'minlength="6"', hint: "Mínimo 6 caracteres. A pessoa pode trocar depois pelo link de redefinição." })}</div>`;
+  openDlg("Novo usuário", body, `<button type="button" data-act="close">Cancelar</button><button class="pri" type="submit">Criar</button>`, async fd => {
+    const sec = initializeApp(firebaseConfig, "sec" + Date.now());
+    const sAuth = getAuth(sec);
+    try {
+      const cred = await createUserWithEmailAndPassword(sAuth, fd.get("email").trim(), fd.get("senha"));
+      await setDoc(doc(db, "users", cred.user.uid), { nome: fd.get("nome").trim(), email: fd.get("email").trim(), role: fd.get("role") });
+      await signOut(sAuth);
+      closeDlg(); toast("Usuário criado.");
+    } catch (err) {
+      toast(err.code === "auth/email-already-in-use" ? "Este e-mail já tem cadastro." : "Erro: " + (err.code || err.message));
+    }
+  });
+}
+
+/* ---------- ações (delegação de eventos) ---------- */
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  const id = b.dataset.id;
+  try {
+    switch (b.dataset.act) {
+      case "close": closeDlg(); break;
+      case "nova": openEntrega(null); break;
+      case "edit": openEntrega(id); break;
+      case "aprovar": {
+        const old = state.entregas.find(x => x.id === id);
+        await updateDoc(doc(db, "entregas", id), { aprovacao: "Aprovado", atualizadoEm: serverTimestamp(), atualizadoPor: state.user.uid });
+        await audit(id, diffTrack(old, { aprovacao: "Aprovado" })); toast("Entrega aprovada."); break;
+      }
+      case "delEntrega": if (confirm("Excluir esta entrega? Isso não pode ser desfeito.")) { await deleteDoc(doc(db, "entregas", id)); closeDlg(); toast("Entrega excluída."); } break;
+      case "novoTipo": openTipo(null); break;
+      case "editTipo": openTipo(id); break;
+      case "delTipo":
+        if (state.entregas.some(x => x.tipoId === id)) { toast("Há entregas lançadas com este tipo. Não é possível excluir."); break; }
+        if (confirm("Excluir este tipo de entrega?")) { await deleteDoc(doc(db, "contrato", id)); closeDlg(); toast("Tipo excluído."); } break;
+      case "novoUser": openUser(); break;
+      case "resetUser": await sendPasswordResetEmail(auth, b.dataset.email); toast("Link de redefinição enviado."); break;
+      case "delUser": if (confirm("Remover o acesso deste usuário? Ele não conseguirá mais entrar no sistema.")) { await deleteDoc(doc(db, "users", id)); toast("Acesso removido."); } break;
+    }
+  } catch (err) { console.error(err); toast("Erro: " + (err.code || err.message)); }
+});
+document.addEventListener("change", e => {
+  if (e.target.id === "selMes") { state.mes = e.target.value; state.filtros.mes = e.target.value; render(); }
+  if (e.target.dataset?.filtro) { state.filtros[e.target.dataset.filtro] = e.target.value; render(); }
+});
+</script>
+</body>
+</html>
